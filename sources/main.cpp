@@ -1,19 +1,30 @@
 #include <iostream>
 #include "raylib.h"
+#include "./headers/gamefield.h"
+#include "./headers/settings.h"
+#include "./headers/ui.h"
 
 int main(void)
 {
-    const int screenWidth = 100;
-    const int screenHeight = 100;
+    Gamefield gamefield;
+    UI ui;
 
-    InitWindow(screenWidth, screenHeight, "Race game");
+    InitWindow(Settings::screenWidth, Settings::screenHeight, "Race game");
 
-    SetTargetFPS(1);
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
         BeginDrawing();
             ClearBackground(RAYWHITE);
+
+            //Drawing gamefield
+            gamefield.draw();
+            ui.draw();
+
+            //Drawing player
+            DrawRectangle(20, Settings::screenHeight - 200, 150, 200, RED);
+
         EndDrawing();
     }
 
