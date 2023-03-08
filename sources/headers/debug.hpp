@@ -1,19 +1,15 @@
 #pragma once
 #include <vector>
 #include "raylib.h"
+#include "entity.hpp"
 
-class Debug
+class Debug:public Entity
 {
 private:
-	int m_positionX;
-	int m_positionY;
 	std::vector<std::string> m_messages {};
 
 public:
-	Debug(int positionX, int positionY) {
-		m_positionX = positionX;
-		m_positionY = positionY;
-	}
+	using Entity::Entity;
 
 	void draw() {
 		DrawRectangle(m_positionX, m_positionY, 150, 250, BLACK);

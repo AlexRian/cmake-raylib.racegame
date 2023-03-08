@@ -1,37 +1,35 @@
 #include <iostream>
 #include <string>
 #include "raylib.h"
-#include "./headers/gamefield.h"
-#include "./headers/settings.h"
-#include "./headers/ui.h"
+#include "./headers/gamefield.hpp"
+#include "./headers/settings.hpp"
+#include "./headers/ui.hpp"
 #include "./headers/debug.hpp"
+#include "./headers/car.hpp"
 
 int main(void)
 {
     Gamefield gamefield;
     UI ui;
-    Debug debug{ Settings::screenWidth - 150, Settings::screenHeight - 250 };
+    Debug debug { Settings::screenWidth - 150, Settings::screenHeight - 250 };
+    Car car{ 20, Settings::screenHeight - 200 };
 
     InitWindow(Settings::screenWidth, Settings::screenHeight, "Race game");
 
     SetTargetFPS(60);
 
-    int count = 0;
-
     while (!WindowShouldClose())
     {
+        if (IsKeyDown(KEY_RIGHT)) car.moveRight();
+        if (IsKeyDown(KEY_LEFT)) car.moveLeft();
+
         BeginDrawing();
             ClearBackground(RAYWHITE);
 
-            //Drawing gamefield
             gamefield.draw();
             ui.draw();
             debug.draw();
-            count++;
-            debug.log("test" + std::to_string(count));
-
-            //Drawing player
-            DrawRectangle(20, Settings::screenHeight - 200, 150, 200, RED);
+            car.draw();
 
         EndDrawing();
     }
