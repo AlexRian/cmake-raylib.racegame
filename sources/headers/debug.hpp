@@ -12,10 +12,10 @@ public:
 	using Entity::Entity;
 
 	void draw() {
-		DrawRectangle(m_positionX, m_positionY, 150, 250, BLACK);
+		DrawRectangle(m_position.x, m_position.y, 150, 250, BLACK);
 		if (!m_messages.empty()) {
 			for (int i = m_messages.size() - 1; i >= 0; --i) {
-				DrawText(m_messages[i].c_str(), m_positionX + 10, m_positionY + i * 20, 20, WHITE);
+				DrawText(m_messages[i].c_str(), m_position.x + 10, m_position.y + i * 20, 20, WHITE);
 			}
 		}
 	}

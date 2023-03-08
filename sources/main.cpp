@@ -13,10 +13,14 @@ int main(void)
     UI ui;
     Debug debug { Settings::screenWidth - 150, Settings::screenHeight - 250 };
     Car car{ 20, Settings::screenHeight - 200 };
+    Car enemyCar{ 170, Settings::screenHeight - 800 };
+
+    bool gameStarted = true;
+    float enemyPlayerPostions[2] = { 20, 170 };
 
     InitWindow(Settings::screenWidth, Settings::screenHeight, "Race game");
 
-    SetTargetFPS(60);
+    SetTargetFPS(120);
 
     while (!WindowShouldClose())
     {
@@ -27,9 +31,24 @@ int main(void)
             ClearBackground(RAYWHITE);
 
             gamefield.draw();
+            
             ui.draw();
             debug.draw();
+            
             car.draw();
+            enemyCar.draw();
+
+            if (gameStarted) {
+                enemyCar.moveDown();
+                if (enemyCar.getPosition().y > 900) {
+                    enemyCar.setPosition(Vector2{ enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -200 });
+                    ui.addPoints();
+                }
+            }
+
+            if (CheckCollisionRecs(car.getCollisionArea(), enemyCar.getCollisionArea())) {
+                gameStarted = false;
+            }
 
         EndDrawing();
     }
