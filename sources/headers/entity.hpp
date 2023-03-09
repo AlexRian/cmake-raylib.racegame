@@ -7,17 +7,8 @@ protected:
 	Vector2 m_position;
 
 public:
-	Entity(int positionX, int positionY) {
-		m_position = Vector2{ (float)positionX, (float)positionY };
-	}
-
+	Entity(int positionX, int positionY);
 	virtual void draw() {};
-
-	Vector2 getPosition() {
-		return m_position;
-	}
-
-	void setPosition(Vector2 position) {
-		m_position = position;
-	}
+	Vector2 getPosition();
+	void setPosition(Vector2 position);
 };

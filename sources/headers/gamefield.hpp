@@ -1,10 +1,9 @@
 #pragma once
 #include "raylib.h"
+#include "entity.hpp"
 
-class Gamefield {
+class Gamefield : public Entity {
+using Entity::Entity;
 public:
-	void draw() {
-		DrawRectangle(10, 0, 10, 800, BLACK);
-		DrawRectangle(320, 0, 10, 800, BLACK);
-	};
+	void draw();
 };

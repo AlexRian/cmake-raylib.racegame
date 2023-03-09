@@ -6,49 +6,38 @@
 #include "./headers/ui.hpp"
 #include "./headers/debug.hpp"
 #include "./headers/car.hpp"
+#include "./headers/gameLogic.hpp"
 
 int main(void)
 {
-    Gamefield gamefield;
-    UI ui;
-    Debug debug { Settings::screenWidth - 150, Settings::screenHeight - 250 };
-    Car car{ 20, Settings::screenHeight - 200 };
-    Car enemyCar{ 170, Settings::screenHeight - 800 };
+    Gamefield gamefield{0,0};
+    UI ui{0,0};
+    Debug debug{ Settings::screenWidth - 150, Settings::screenHeight - 250, false };
 
-    bool gameStarted = true;
-    float enemyPlayerPostions[2] = { 20, 170 };
+    GameLogic gameLogic{&ui};
 
     InitWindow(Settings::screenWidth, Settings::screenHeight, "Race game");
 
-    SetTargetFPS(120);
+    SetTargetFPS(60);
 
     while (!WindowShouldClose())
     {
-        if (IsKeyDown(KEY_RIGHT)) car.moveRight();
-        if (IsKeyDown(KEY_LEFT)) car.moveLeft();
+        if (IsKeyDown(KEY_RIGHT)) gameLogic.getPlayerCar().moveRight();
+        if (IsKeyDown(KEY_LEFT)) gameLogic.getPlayerCar().moveLeft();
 
         BeginDrawing();
             ClearBackground(RAYWHITE);
 
             gamefield.draw();
-            
             ui.draw();
             debug.draw();
             
-            car.draw();
-            enemyCar.draw();
-
-            if (gameStarted) {
-                enemyCar.moveDown();
-                if (enemyCar.getPosition().y > 900) {
-                    enemyCar.setPosition(Vector2{ enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -200 });
-                    ui.addPoints();
-                }
+            gameLogic.getPlayerCar().draw();
+            if (gameLogic.isGameStarted()) {
+                gameLogic.moveEnemyCarsDown();
+                gameLogic.checkPlayerCarCollisions();
             }
-
-            if (CheckCollisionRecs(car.getCollisionArea(), enemyCar.getCollisionArea())) {
-                gameStarted = false;
-            }
+            gameLogic.drawEnemyCars();
 
         EndDrawing();
     }
