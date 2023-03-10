@@ -14,6 +14,8 @@ void UI::addPoints() {
 
 void UI::drawHelpMessage() {
 	DrawText("Choose level via \n UP/down arrow keys", Settings::screenWidth - 160, Settings::screenHeight / 2 - 70, 15, DARKGRAY);
+
+	DrawText("Controls:\nARROW LEFT/Right\nmove player car\n\nR - restart game\n", Settings::screenWidth - 160, Settings::screenHeight / 2 + 70, 15, DARKGRAY);
 }
 
 void UI::increaseLevel()
