@@ -13,7 +13,7 @@ private:
 public:
 	void draw();
 	Rectangle getCollisionArea();
-	void moveDown();
+	void moveDown(int& level);
 	void moveRight();
 	void moveLeft();
 };

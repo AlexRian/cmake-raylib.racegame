@@ -1,4 +1,5 @@
 #pragma once
+enum class GameStages { settings, arena };
 
 class Settings {
 public:

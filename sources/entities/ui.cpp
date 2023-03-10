@@ -11,3 +11,29 @@ void UI::draw() {
 void UI::addPoints() {
 	m_points += 100;
 }
+
+void UI::drawHelpMessage() {
+	DrawText("Choose level via \n UP/down arrow keys", Settings::screenWidth - 160, Settings::screenHeight / 2 - 70, 15, DARKGRAY);
+}
+
+void UI::increaseLevel()
+{
+	if ((m_level + 1) > 10) return;
+	m_level++;
+}
+
+void UI::decreaseLevel()
+{
+	if ((m_level - 1) < 1) return;
+	m_level--;
+}
+
+void UI::clearPoints()
+{
+	m_points = 0;
+}
+
+int& UI::getSelectedLevel()
+{
+	return m_level;
+}

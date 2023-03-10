@@ -10,14 +10,24 @@ Car& GameLogic::getPlayerCar() {
 bool GameLogic::isGameStarted() {
 	return m_gameStarted;
 }
+void GameLogic::startGame()
+{
+	m_gameStarted = true;
+}
 void GameLogic::generateEnemyCars() {
 	m_enemyCars = {
 		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -200},
-		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -700},
-		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -1200},
-		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -1500},
+		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -800},
+		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -1300},
+		Car {(int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -1800},
 	};
-};
+}
+void GameLogic::clearEnemyCars()
+{
+	m_enemyCars.clear();
+	generateEnemyCars();
+}
+;
 void GameLogic::drawEnemyCars() {
 	for (auto& enemyCar : m_enemyCars) {
 		enemyCar.draw();
@@ -26,14 +36,16 @@ void GameLogic::drawEnemyCars() {
 std::vector<Car>& GameLogic::getEnemyCars() {
 	return m_enemyCars;
 };
+void GameLogic::setCurrentSpeedLevel(int& level) {
+	m_currentSpeed = level;
+};
 void GameLogic::moveEnemyCarsDown() {
 	for (auto& enemyCar : m_enemyCars) {
-		enemyCar.moveDown();
+		enemyCar.moveDown(m_currentSpeed);
 		if (enemyCar.getPosition().y > 900) {
 			m_enemyCars.erase(m_enemyCars.begin());
-			if (m_enemyCars.size() == 0) {
-				generateEnemyCars();
-			}
+			m_enemyCars.push_back(Car{ (int)m_enemyPlayerPostions[rand() % (1 - 0 + 1) + 0], -1300});
+
 			m_uiElement -> addPoints();
 		}
 	}

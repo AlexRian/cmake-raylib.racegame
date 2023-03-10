@@ -14,8 +14,8 @@ Rectangle Car::getCollisionArea() {
 	return collisionArea;
 }
 
-void Car::moveDown() {
-	m_position.y += 5;
+void Car::moveDown(int& level) {
+	m_position.y += 5 * level;
 }
 void Car::moveRight() {
 	m_position.x = 170;

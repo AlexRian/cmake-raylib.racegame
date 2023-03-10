@@ -20,24 +20,46 @@ int main(void)
 
     SetTargetFPS(60);
 
+    GameStages curentStage = GameStages::settings;
+
     while (!WindowShouldClose())
     {
-        if (IsKeyDown(KEY_RIGHT)) gameLogic.getPlayerCar().moveRight();
-        if (IsKeyDown(KEY_LEFT)) gameLogic.getPlayerCar().moveLeft();
-
         BeginDrawing();
             ClearBackground(RAYWHITE);
 
             gamefield.draw();
             ui.draw();
             debug.draw();
-            
             gameLogic.getPlayerCar().draw();
-            if (gameLogic.isGameStarted()) {
-                gameLogic.moveEnemyCarsDown();
-                gameLogic.checkPlayerCarCollisions();
+            
+            if (curentStage == GameStages::settings) {
+                if (IsKeyPressed(KEY_UP)) ui.increaseLevel();
+                if (IsKeyPressed(KEY_DOWN)) ui.decreaseLevel();
+                if (IsKeyPressed(KEY_ENTER)) {
+                    gameLogic.setCurrentSpeedLevel(ui.getSelectedLevel());
+                    curentStage = GameStages::arena;
+                    gameLogic.startGame();
+                }
+
+                ui.drawHelpMessage();
             }
-            gameLogic.drawEnemyCars();
+            else 
+            {
+                if (IsKeyPressed(KEY_R)) {
+                    gameLogic.clearEnemyCars();
+                    ui.clearPoints();
+                    curentStage = GameStages::settings;
+                }
+
+                if (gameLogic.isGameStarted()) {
+                    if (IsKeyDown(KEY_RIGHT)) gameLogic.getPlayerCar().moveRight();
+                    if (IsKeyDown(KEY_LEFT)) gameLogic.getPlayerCar().moveLeft();
+
+                    gameLogic.moveEnemyCarsDown();
+                    gameLogic.checkPlayerCarCollisions();
+                }
+                gameLogic.drawEnemyCars();
+            }
 
         EndDrawing();
     }
