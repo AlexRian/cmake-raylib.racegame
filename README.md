@@ -2,3 +2,6 @@
 
 # raylib.racegame
 ## Simple racegame maded with raylib and Cmake.
+
+## License
+MIT
